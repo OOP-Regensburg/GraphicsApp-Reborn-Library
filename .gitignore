@@ -4,3 +4,6 @@
 
 # Production and Testing
 out/
+
+# macOS
+.DS_Store
