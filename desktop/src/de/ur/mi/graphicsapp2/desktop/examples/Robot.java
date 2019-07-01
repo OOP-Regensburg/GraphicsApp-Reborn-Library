@@ -1,7 +1,5 @@
 package de.ur.mi.graphicsapp2.desktop.examples;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import de.ur.mi.graphicsapp2.GraphicsApp;
 import de.ur.mi.graphicsapp2.graphics.Color;
 import de.ur.mi.graphicsapp2.graphics.Ellipse;

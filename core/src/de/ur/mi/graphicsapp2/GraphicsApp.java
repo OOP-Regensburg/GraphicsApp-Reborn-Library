@@ -2,8 +2,8 @@ package de.ur.mi.graphicsapp2;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,8 +25,8 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
 
     public static void main (String[] arg){
         try { Class c = Class.forName(arg[0]);
-            LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-            new LwjglApplication((GraphicsApp)c.newInstance(), config);} catch (IllegalAccessException e) {
+            Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+            new Lwjgl3Application((GraphicsApp)c.newInstance(), config);} catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
             e.printStackTrace();
@@ -54,6 +54,8 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
     private boolean shapeBatchOpen = false;
 
     public boolean rendering = false;
+
+    private boolean refreshBackground = true;
 
 
     @Override
@@ -90,8 +92,11 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
             graphicsObjects = graphicsObjectsLastFrame;
         }
 
-        Gdx.gl.glClearColor(backgroundColor.r / 255f, backgroundColor.g / 255f, backgroundColor.b / 255f, backgroundColor.a / 255f);
-        Gdx.gl.glClear(Gdx.gl30.GL_COLOR_BUFFER_BIT);
+
+        if(refreshBackground){
+            Gdx.gl.glClearColor(backgroundColor.r / 255f, backgroundColor.g / 255f, backgroundColor.b / 255f, backgroundColor.a / 255f);
+            Gdx.gl.glClear(Gdx.gl30.GL_COLOR_BUFFER_BIT);
+        }
         //see https://stackoverflow.com/questions/15397074/libgdx-how-to-draw-filled-rectangle-in-the-right-place-in-scene2d
         if (!projectionMatrixSet) {
             shapeRenderer.setProjectionMatrix(camera.combined);
@@ -140,6 +145,7 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
 
         rendering = false;
 
+        refreshBackground = false;
 
     }
 
@@ -167,6 +173,7 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
 
     public void background(Color color) {
         backgroundColor = color;
+        refreshBackground = true;
     }
 
     public void setup() {
@@ -191,6 +198,7 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
         camera.viewportWidth = width;
         camera.viewportHeight = height;
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        refreshBackground = true;
     }
 
     @Override
