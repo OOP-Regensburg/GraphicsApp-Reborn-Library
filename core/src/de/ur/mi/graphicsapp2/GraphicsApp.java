@@ -26,7 +26,8 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
     public static void main (String[] arg){
         try { Class c = Class.forName(arg[0]);
             Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-            new Lwjgl3Application((GraphicsApp)c.newInstance(), config);} catch (IllegalAccessException e) {
+            new Lwjgl3Application((GraphicsApp)c.newInstance(), config);
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
             e.printStackTrace();
@@ -55,11 +56,12 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
 
     public boolean rendering = false;
 
-    private boolean refreshBackground = true;
+    private boolean hasUpdateMethod = true;
 
 
     @Override
     public void create() {
+
         inputHandler = new InputHandler(this);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         size((int) camera.viewportWidth, (int) camera.viewportHeight);
@@ -84,19 +86,14 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
         //first draw to add objects to list but objects get no really drawn
         draw();
 
-        //TODO: find better way of implementation
-        /*
-        if no objects were added in draw (cause the app only uses setup() ) the objects from the last frame should be used
-         */
-        if(graphicsObjects.isEmpty()){
+        if(!hasUpdateMethod){
             graphicsObjects = graphicsObjectsLastFrame;
         }
 
 
-        if(refreshBackground){
-            Gdx.gl.glClearColor(backgroundColor.r / 255f, backgroundColor.g / 255f, backgroundColor.b / 255f, backgroundColor.a / 255f);
-            Gdx.gl.glClear(Gdx.gl30.GL_COLOR_BUFFER_BIT);
-        }
+        Gdx.gl.glClearColor(backgroundColor.r / 255f, backgroundColor.g / 255f, backgroundColor.b / 255f, backgroundColor.a / 255f);
+        Gdx.gl.glClear(Gdx.gl30.GL_COLOR_BUFFER_BIT);
+
         //see https://stackoverflow.com/questions/15397074/libgdx-how-to-draw-filled-rectangle-in-the-right-place-in-scene2d
         if (!projectionMatrixSet) {
             shapeRenderer.setProjectionMatrix(camera.combined);
@@ -145,8 +142,6 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
 
         rendering = false;
 
-        refreshBackground = false;
-
     }
 
     @Override
@@ -173,15 +168,15 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
 
     public void background(Color color) {
         backgroundColor = color;
-        refreshBackground = true;
     }
 
     public void setup() {
         System.out.println("super");
     }
 
+    //this draw is only called when child class has no own draw()
     public void draw() {
-
+        hasUpdateMethod = false;
     }
 
     public void text(BitmapFont font, String text, int x, int y) {
@@ -198,7 +193,6 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
         camera.viewportWidth = width;
         camera.viewportHeight = height;
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-        refreshBackground = true;
     }
 
     @Override
