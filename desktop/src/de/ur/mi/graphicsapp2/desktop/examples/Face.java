@@ -3,8 +3,10 @@ package de.ur.mi.graphicsapp2.desktop.examples;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import de.ur.mi.graphicsapp2.GraphicsApp;
+import de.ur.mi.graphicsapp2.geom.Point;
 import de.ur.mi.graphicsapp2.graphics.Color;
 import de.ur.mi.graphicsapp2.graphics.Ellipse;
+import de.ur.mi.graphicsapp2.graphics.Triangle;
 
 
 public class Face extends GraphicsApp {
@@ -27,6 +29,7 @@ public class Face extends GraphicsApp {
         drawMouth();
         drawLeftEye();
         drawRightEye();
+        drawHat();
     }
 
     private void drawFace() {
@@ -36,6 +39,14 @@ public class Face extends GraphicsApp {
         int height = HEIGHT/2;
         Ellipse face = new Ellipse(x, y, width, height, Color.YELLOW);
         face.draw();
+    }
+
+    private void drawHat(){
+        Point p1 = new Point(WIDTH/4,HEIGHT / 5);
+        Point p2 = new Point((WIDTH/4)*3,HEIGHT / 5);
+        Point p3 = new Point(WIDTH/2,HEIGHT / 12);
+        Triangle hat = new Triangle(p1,p2,p3,Color.CYAN);
+        hat.draw();
     }
 
     private void drawMouth() {
