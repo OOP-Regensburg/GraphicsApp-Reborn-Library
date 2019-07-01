@@ -9,12 +9,6 @@ import de.ur.mi.graphicsapp2.events.KeyEvent;
 import de.ur.mi.graphicsapp2.graphics.Color;
 
 public class Breakout extends GraphicsApp {
-
-	public static void main (String[] arg) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new Breakout(), config);
-
-	}
 	
 	private static final long serialVersionUID = 1L;
 

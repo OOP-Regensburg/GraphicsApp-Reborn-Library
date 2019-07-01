@@ -13,12 +13,6 @@ import de.ur.mi.graphicsapp2.graphics.Image;
  */
 public class ClickObjects extends GraphicsApp {
 
-    public static void main (String[] arg){
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        new LwjglApplication(new ClickObjects(), config);
-
-    }
-
     private static final int WIDTH = 800;
     private static final int HEIGHT = 531;
     private static final int CLICKABLE_NUM = 4;

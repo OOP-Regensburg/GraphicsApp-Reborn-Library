@@ -2,6 +2,8 @@ package de.ur.mi.graphicsapp2;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +22,13 @@ import de.ur.mi.graphicsapp2.graphics.Label;
 import java.util.ArrayList;
 
 public class GraphicsApp extends ApplicationAdapter implements InputListener {
+
+    public static void main (String[] arg){
+        try { Class c = Class.forName(arg[0]);
+            LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+            new LwjglApplication((GraphicsApp)c.newInstance(), config);} catch (Exception ignored){}
+    }
+
     Texture img;
     Camera camera;
 

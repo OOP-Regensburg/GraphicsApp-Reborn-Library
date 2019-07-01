@@ -15,11 +15,6 @@ import de.ur.mi.graphicsapp2.graphics.Ellipse;
 
 public class BouncingBall extends GraphicsApp {
 
-    public static void main (String[] arg) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        new LwjglApplication(new BouncingBall(), config);
-
-    }
     /* Private constants */
     private static final int CANVAS_HEIGHT = 400;
     private static final int CANVAS_WIDTH = 1000;

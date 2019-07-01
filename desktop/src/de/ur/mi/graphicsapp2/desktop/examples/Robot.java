@@ -15,12 +15,6 @@ public class Robot extends GraphicsApp {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 800;
 
-    public static void main (String[] arg){
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        new LwjglApplication(new Robot(), config);
-
-    }
-
     public void setup() {
         size(WIDTH, HEIGHT);
         background(Color.LIGHT_GRAY);

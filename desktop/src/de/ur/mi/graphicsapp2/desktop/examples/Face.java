@@ -9,12 +9,6 @@ import de.ur.mi.graphicsapp2.graphics.Ellipse;
 
 public class Face extends GraphicsApp {
 
-    public static void main (String[] arg) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        new LwjglApplication(new Face(), config);
-
-    }
-
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
 
