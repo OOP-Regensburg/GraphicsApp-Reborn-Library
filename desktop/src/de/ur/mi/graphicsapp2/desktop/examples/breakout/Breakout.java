@@ -1,7 +1,5 @@
 package de.ur.mi.graphicsapp2.desktop.examples.breakout;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import de.ur.mi.graphicsapp2.GraphicsApp;
 import de.ur.mi.graphicsapp2.desktop.examples.breakout.states.GameState;
 import de.ur.mi.graphicsapp2.desktop.examples.breakout.states.GameStateNew;

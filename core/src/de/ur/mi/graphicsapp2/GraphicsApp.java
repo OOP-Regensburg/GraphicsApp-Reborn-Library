@@ -26,10 +26,15 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
     public static void main (String[] arg){
         try { Class c = Class.forName(arg[0]);
             LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-            new LwjglApplication((GraphicsApp)c.newInstance(), config);} catch (Exception ignored){}
+            new LwjglApplication((GraphicsApp)c.newInstance(), config);} catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("The class '"+arg[0]+"' was not found. Graphics App can not be started. Exiting now!");
+        }
     }
 
-    Texture img;
     Camera camera;
 
     private boolean initilaized = false;
