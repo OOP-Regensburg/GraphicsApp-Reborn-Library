@@ -22,8 +22,8 @@ public class GameDisplay {
 	}
 	
 	private void setup() {
-		scoresLabel = new Label(10, yPos, "", Color.YELLOW, 10);
 		roundsBar = new Compound(10, yPos + 4);
+		scoresLabel = new Label(10, yPos, "", Color.YELLOW, 10);
 		
 		resetScores();
 		resetRounds();
@@ -63,10 +63,9 @@ public class GameDisplay {
 	}
 	
 	public void draw() {
+		roundsBar.draw();
 		scoresLabel.setText("Scores: " + scores);
 		scoresLabel.draw();
-		
-		roundsBar.draw();
 	}
 	
 }

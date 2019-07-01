@@ -34,7 +34,9 @@ public class GraphicsApp extends ApplicationAdapter implements KeyListener {
 
     private KeyHandler keyHandler;
 
-    private BitmapFont bf;
+    private boolean spriteBatchOpen = false;
+    private boolean shapeBatchOpen = false;
+
 
     @Override
     public void create() {
@@ -46,8 +48,6 @@ public class GraphicsApp extends ApplicationAdapter implements KeyListener {
         projectionMatrixSet = false;
 
         GraphicsObject.app = this;
-
-        bf = new BitmapFont();
     }
 
     @Override
@@ -68,31 +68,43 @@ public class GraphicsApp extends ApplicationAdapter implements KeyListener {
             spriteBatch.setProjectionMatrix(camera.combined);
         }
 
-        //text(bf, "TEXT", 0, 0);
-
         draw();
 
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
         for (GraphicsObject graphicsObject : graphicsObjects) {
+
+            if ((graphicsObject instanceof Image || graphicsObject instanceof Label)) {
+                if(shapeBatchOpen){
+                    shapeRenderer.end();
+                    shapeBatchOpen = false;
+                }
+                if(!spriteBatchOpen){
+                    spriteBatch.begin();
+                    spriteBatchOpen = true;
+                }
+                graphicsObject.drawCall();
+            }
 
             if (!(graphicsObject instanceof Image || graphicsObject instanceof Label)) {
+                if(spriteBatchOpen){
+                    spriteBatch.end();
+                    spriteBatchOpen = false;
+                }
+                if(!shapeBatchOpen){
+                    shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                    shapeBatchOpen = true;
+                }
                 graphicsObject.drawCall();
             }
         }
 
-        shapeRenderer.end();
-
-
-        spriteBatch.begin();
-        for (GraphicsObject graphicsObject : graphicsObjects) {
-            if (graphicsObject instanceof Image || graphicsObject instanceof Label) {
-                graphicsObject.drawCall();
-            }
+        if(spriteBatchOpen){
+            spriteBatchOpen = false;
+            spriteBatch.end();
         }
-
-        spriteBatch.end();
+        if(shapeBatchOpen){
+            shapeBatchOpen = false;
+            shapeRenderer.end();
+        }
 
 
     }
