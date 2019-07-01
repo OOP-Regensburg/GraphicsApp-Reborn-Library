@@ -5,20 +5,20 @@ import com.badlogic.gdx.InputProcessor;
 
 import java.util.ArrayList;
 
-public class KeyHandler implements InputProcessor {
-    private static ArrayList<KeyListener> keyListeners = new ArrayList<KeyListener>();
+public class InputHandler implements InputProcessor {
+    private static ArrayList<InputListener> inputListeners = new ArrayList<InputListener>();
 
-    public KeyHandler(KeyListener keyListener){
-        keyListeners.add(keyListener);
+    public InputHandler(InputListener inputListener){
+        inputListeners.add(inputListener);
         Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public boolean keyDown(int keycode) {
         KeyEvent keyEvent = new KeyEvent((char)keycode,keycode);
-        for (KeyListener keyListener: keyListeners
+        for (InputListener inputListener : inputListeners
              ) {
-            keyListener.keyPressed(keyEvent);
+            inputListener.keyPressed(keyEvent);
         }
         return true;
     }
@@ -26,9 +26,9 @@ public class KeyHandler implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         KeyEvent keyEvent = new KeyEvent((char)keycode,keycode);
-        for (KeyListener keyListener: keyListeners
+        for (InputListener inputListener : inputListeners
         ) {
-            keyListener.keyReleased(keyEvent);
+            inputListener.keyReleased(keyEvent);
         }
         return true;
     }
@@ -40,12 +40,22 @@ public class KeyHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        MouseEvent event = new MouseEvent(3,screenX,screenY);
+        for (InputListener inputListener : inputListeners
+        ) {
+            inputListener.mouseClicked(event);
+        }
+        return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+        MouseEvent event = new MouseEvent(2,screenX,screenY);
+        for (InputListener inputListener : inputListeners
+        ) {
+            inputListener.mouseReleased(event);
+        }
+        return true;
     }
 
     @Override

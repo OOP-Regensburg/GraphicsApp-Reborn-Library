@@ -9,8 +9,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.ur.mi.graphicsapp2.events.KeyEvent;
-import de.ur.mi.graphicsapp2.events.KeyHandler;
-import de.ur.mi.graphicsapp2.events.KeyListener;
+import de.ur.mi.graphicsapp2.events.InputHandler;
+import de.ur.mi.graphicsapp2.events.InputListener;
+import de.ur.mi.graphicsapp2.events.MouseEvent;
 import de.ur.mi.graphicsapp2.graphics.Color;
 import de.ur.mi.graphicsapp2.graphics.GraphicsObject;
 import de.ur.mi.graphicsapp2.graphics.Image;
@@ -18,7 +19,7 @@ import de.ur.mi.graphicsapp2.graphics.Label;
 
 import java.util.ArrayList;
 
-public class GraphicsApp extends ApplicationAdapter implements KeyListener {
+public class GraphicsApp extends ApplicationAdapter implements InputListener {
     Texture img;
     Camera camera;
 
@@ -32,7 +33,7 @@ public class GraphicsApp extends ApplicationAdapter implements KeyListener {
 
     private ArrayList<GraphicsObject> graphicsObjects = new ArrayList<GraphicsObject>();
 
-    private KeyHandler keyHandler;
+    private InputHandler inputHandler;
 
     private boolean spriteBatchOpen = false;
     private boolean shapeBatchOpen = false;
@@ -40,7 +41,7 @@ public class GraphicsApp extends ApplicationAdapter implements KeyListener {
 
     @Override
     public void create() {
-        keyHandler = new KeyHandler(this);
+        inputHandler = new InputHandler(this);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         size((int) camera.viewportWidth, (int) camera.viewportHeight);
         shapeRenderer = new ShapeRenderer();
@@ -160,6 +161,16 @@ public class GraphicsApp extends ApplicationAdapter implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent event) {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent event) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent event) {
+
     }
 
 }
