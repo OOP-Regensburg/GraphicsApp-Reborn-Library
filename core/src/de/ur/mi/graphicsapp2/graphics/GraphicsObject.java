@@ -1,6 +1,5 @@
 package de.ur.mi.graphicsapp2.graphics;
 
-import com.badlogic.gdx.Graphics;
 import de.ur.mi.graphicsapp2.GraphicsApp;
 import de.ur.mi.graphicsapp2.geom.Point;
 
@@ -323,6 +322,10 @@ public abstract class GraphicsObject{
     public boolean hitTest(double x, double y) {
         return ((x >= getLeftBorder()) && (x <= getRightBorder())
                 && (y >= getTopBorder()) && (y <= getBottomBorder()));
+    }
+
+    public void destroy(){ //TODO: need another solution
+        app.removeObject(this);
     }
 
 }
