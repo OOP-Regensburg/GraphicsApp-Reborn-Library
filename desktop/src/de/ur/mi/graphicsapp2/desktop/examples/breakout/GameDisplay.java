@@ -2,11 +2,12 @@ package de.ur.mi.graphicsapp2.desktop.examples.breakout;
 
 import de.ur.mi.graphicsapp2.graphics.Color;
 import de.ur.mi.graphicsapp2.graphics.Compound;
+import de.ur.mi.graphicsapp2.graphics.Label;
 import de.ur.mi.graphicsapp2.graphics.Rect;
 
 public class GameDisplay {
 	
-	//private Label scoresLabel;
+	private Label scoresLabel;
 	private int scores;
 	private Compound roundsBar;
 	private int numRounds;
@@ -21,7 +22,7 @@ public class GameDisplay {
 	}
 	
 	private void setup() {
-		//scoresLabel = new Label(10, yPos, "", Color.YELLOW, 10);
+		scoresLabel = new Label(10, yPos, "", Color.YELLOW, 10);
 		roundsBar = new Compound(10, yPos + 4);
 		
 		resetScores();
@@ -62,8 +63,8 @@ public class GameDisplay {
 	}
 	
 	public void draw() {
-		//scoresLabel.setText("Scores: " + scores);
-		//scoresLabel.draw();
+		scoresLabel.setText("Scores: " + scores);
+		scoresLabel.draw();
 		
 		roundsBar.draw();
 	}

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import de.ur.mi.graphicsapp2.events.KeyEvent;
@@ -12,121 +13,141 @@ import de.ur.mi.graphicsapp2.events.KeyHandler;
 import de.ur.mi.graphicsapp2.events.KeyListener;
 import de.ur.mi.graphicsapp2.graphics.Color;
 import de.ur.mi.graphicsapp2.graphics.GraphicsObject;
+import de.ur.mi.graphicsapp2.graphics.Image;
+import de.ur.mi.graphicsapp2.graphics.Label;
 
 import java.util.ArrayList;
 
 public class GraphicsApp extends ApplicationAdapter implements KeyListener {
-	Texture img;
-	Camera camera;
+    Texture img;
+    Camera camera;
 
-	private boolean initilaized = false;
+    private boolean initilaized = false;
 
-	public static ShapeRenderer shapeRenderer;
-	public static SpriteBatch spriteBatch;
-	static private boolean projectionMatrixSet;
+    public static ShapeRenderer shapeRenderer;
+    public static SpriteBatch spriteBatch;
+    static private boolean projectionMatrixSet;
 
-	private Color backgroundColor = Color.WHITE;
+    private Color backgroundColor = Color.WHITE;
 
-	private ArrayList<GraphicsObject> graphicsObjects = new ArrayList<GraphicsObject>();
+    private ArrayList<GraphicsObject> graphicsObjects = new ArrayList<GraphicsObject>();
 
-	private KeyHandler keyHandler;
-	
-	@Override
-	public void create () {
-		keyHandler = new KeyHandler(this);
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-		size((int)camera.viewportWidth,(int)camera.viewportHeight);
-		shapeRenderer = new ShapeRenderer();
-		spriteBatch = new SpriteBatch();
-		projectionMatrixSet = false;
+    private KeyHandler keyHandler;
 
-		GraphicsObject.app = this;
-	}
+    private BitmapFont bf;
 
-	@Override
-	public void render () {
-		camera.update();
-		if(!initilaized){
-			setup();
-			initilaized = true;
-		}
-		super.render();
+    @Override
+    public void create() {
+        keyHandler = new KeyHandler(this);
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        size((int) camera.viewportWidth, (int) camera.viewportHeight);
+        shapeRenderer = new ShapeRenderer();
+        spriteBatch = new SpriteBatch();
+        projectionMatrixSet = false;
 
-		Gdx.gl.glClearColor(backgroundColor.r/255f,backgroundColor.g/255f,backgroundColor.b/255f,backgroundColor.a/255f);
-		Gdx.gl.glClear(Gdx.gl30.GL_COLOR_BUFFER_BIT);
-		//see https://stackoverflow.com/questions/15397074/libgdx-how-to-draw-filled-rectangle-in-the-right-place-in-scene2d
-		if(!projectionMatrixSet){
-			shapeRenderer.setProjectionMatrix(camera.combined);
-			spriteBatch.setProjectionMatrix(camera.combined);
-		}
+        GraphicsObject.app = this;
 
-		draw();
+        bf = new BitmapFont();
+    }
 
-		ArrayList<GraphicsObject> toRemove = new ArrayList<GraphicsObject>();
+    @Override
+    public void render() {
+        graphicsObjects = new ArrayList<GraphicsObject>();
+        camera.update();
+        if (!initilaized) {
+            setup();
+            initilaized = true;
+        }
+        super.render();
 
-		for(GraphicsObject graphicsObject : graphicsObjects){
-			if(graphicsObject == null){
-				System.out.println("NULL");
-				toRemove.add(graphicsObject);
-			}
-		}
+        Gdx.gl.glClearColor(backgroundColor.r / 255f, backgroundColor.g / 255f, backgroundColor.b / 255f, backgroundColor.a / 255f);
+        Gdx.gl.glClear(Gdx.gl30.GL_COLOR_BUFFER_BIT);
+        //see https://stackoverflow.com/questions/15397074/libgdx-how-to-draw-filled-rectangle-in-the-right-place-in-scene2d
+        if (!projectionMatrixSet) {
+            shapeRenderer.setProjectionMatrix(camera.combined);
+            spriteBatch.setProjectionMatrix(camera.combined);
+        }
 
-		for(GraphicsObject graphicsObject : toRemove){
-			graphicsObjects.remove(graphicsObject);
-		}
+        //text(bf, "TEXT", 0, 0);
 
-		for(GraphicsObject graphicsObject : graphicsObjects){
-			graphicsObject.draw();
-		}
-	}
-	
-	@Override
-	public void dispose () {
-		shapeRenderer.dispose();
-		spriteBatch.dispose();
-	}
+        draw();
 
-	public void addObject(GraphicsObject graphicsObject){
-		graphicsObjects.add(graphicsObject);
-	}
 
-	public void removeObject(GraphicsObject graphicsObject){
-		graphicsObjects.remove(graphicsObject);
-	}
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-	public double getWidth(){
-		return Gdx.graphics.getWidth();
-	}
+        for (GraphicsObject graphicsObject : graphicsObjects) {
 
-	public double getHeight(){
-		return Gdx.graphics.getHeight();
-	}
+            if (!(graphicsObject instanceof Image || graphicsObject instanceof Label)) {
+                graphicsObject.drawCall();
+            }
+        }
 
-	public void background(Color color){
-		backgroundColor = color;
-	}
+        shapeRenderer.end();
 
-	public void setup(){
-		System.out.println("super");
-	}
 
-	public void draw(){
+        spriteBatch.begin();
+        for (GraphicsObject graphicsObject : graphicsObjects) {
+            if (graphicsObject instanceof Image || graphicsObject instanceof Label) {
+                graphicsObject.drawCall();
+            }
+        }
 
-	}
+        spriteBatch.end();
 
-	public void size(int width, int height){
-		Gdx.graphics.setWindowedMode(width, height);
-		camera.viewportWidth = width;
-		camera.viewportHeight = height;
-		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight/2,0);
-	}
 
-	@Override
-	public void keyPressed(KeyEvent event) {
-	}
+    }
 
-	@Override
-	public void keyReleased(KeyEvent event) {
-	}
+    @Override
+    public void dispose() {
+        shapeRenderer.dispose();
+        spriteBatch.dispose();
+    }
+
+    public void addObject(GraphicsObject graphicsObject) {
+        graphicsObjects.add(graphicsObject);
+    }
+
+    public void removeObject(GraphicsObject graphicsObject) {
+        graphicsObjects.remove(graphicsObject);
+    }
+
+    public double getWidth() {
+        return Gdx.graphics.getWidth();
+    }
+
+    public double getHeight() {
+        return Gdx.graphics.getHeight();
+    }
+
+    public void background(Color color) {
+        backgroundColor = color;
+    }
+
+    public void setup() {
+        System.out.println("super");
+    }
+
+    public void draw() {
+
+    }
+
+    public void text(BitmapFont font, String text, int x, int y) {
+        font.draw(spriteBatch, text, x, (int) (getHeight() - y));
+    }
+
+    public void size(int width, int height) {
+        Gdx.graphics.setWindowedMode(width, height);
+        camera.viewportWidth = width;
+        camera.viewportHeight = height;
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent event) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent event) {
+    }
 
 }

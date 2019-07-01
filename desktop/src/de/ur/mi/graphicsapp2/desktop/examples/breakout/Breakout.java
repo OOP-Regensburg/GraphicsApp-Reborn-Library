@@ -56,11 +56,12 @@ public class Breakout extends GraphicsApp {
 
 		handleKeys();
 
-		gameDisplay.draw();
 		bricks.draw();
 		paddle.draw();
 		
 		drawBall();
+
+		gameDisplay.draw();
 	}
 
 	private void drawBall() {

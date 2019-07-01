@@ -47,13 +47,11 @@ public class Rect extends GraphicsObject implements Scalable, Resizable {
     }
 
     @Override
-    public void draw() {
-        super.draw();
+    public void drawCall() {
+        super.drawCall();
         //app.ellipse((float) x, (float) y, (float) width, (float) height);
-        app.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         app.shapeRenderer.setColor(color.convertColor());
         app.shapeRenderer.rect((float)x,(float)(app.getHeight()-y-height),(float)width,(float)height);
-        app.shapeRenderer.end();
     }
 
     @Override

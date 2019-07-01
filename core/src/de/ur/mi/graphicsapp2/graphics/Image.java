@@ -85,11 +85,10 @@ public class Image extends GraphicsObject implements Scalable, Resizable {
     }
 
     @Override
-    public void draw() {
+    public void drawCall() {
+        super.drawCall();
         //app.image(img, (float) x, (float) y, (float) width, (float) height);
-        app.spriteBatch.begin();
         app.spriteBatch.draw(img,(float)x,(float)(app.getHeight()-y-height),(float)width,(float)height);
-        app.spriteBatch.end();
     }
 
     /**

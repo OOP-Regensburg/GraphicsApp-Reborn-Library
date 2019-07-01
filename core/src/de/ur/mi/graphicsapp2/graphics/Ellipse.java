@@ -63,13 +63,11 @@ public class Ellipse extends GraphicsObject implements Scalable, Resizable {
     }
 
     @Override
-    public void draw() {
-        super.draw();
+    public void drawCall() {
+        super.drawCall();
         //app.ellipse((float) x, (float) y, (float) width, (float) height);
-        app.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         app.shapeRenderer.setColor(color.convertColor());
         app.shapeRenderer.ellipse((float)(x-width/2f),(float)(app.getHeight()-y-height/2f),(float)width,(float)height);
-        app.shapeRenderer.end();
     }
 
     @Override

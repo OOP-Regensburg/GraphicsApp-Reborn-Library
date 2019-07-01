@@ -89,7 +89,6 @@ public class Bricks {
 		
 		if (collidingBrick != null) {
 			bricks.remove(collidingBrick);
-			collidingBrick.destroy();
 		}
 		
 		return collidingBrick != null;

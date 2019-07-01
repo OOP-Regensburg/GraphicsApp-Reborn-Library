@@ -50,11 +50,11 @@ public class Compound extends GraphicsObject {
     /**
      * Draws the Compound and all added objects.
      */
-    public void draw() {
+    public void drawCall() {
         drawBackground();
 
         for (int i = 0; i < objects.size(); i++) {
-            objects.get(i).draw();
+            objects.get(i).drawCall();
         }
     }
 

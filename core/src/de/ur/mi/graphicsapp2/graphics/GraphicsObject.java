@@ -299,16 +299,11 @@ public abstract class GraphicsObject{
      * Draws the GraphicsObject to the canvas.
      */
     public void draw() {
-        /*
-        app.strokeWeight((float) borderWeight);
+        app.addObject(this);
+    }
 
-        app.stroke(borderColor.getRed(), borderColor.getGreen(),
-                borderColor.getBlue(), borderColor.getAlpha());
+    public void drawCall(){
 
-        app.fill(color.getRed(), color.getGreen(), color.getBlue(),
-                color.getAlpha());
-
-         */
     }
 
     /**
@@ -322,10 +317,6 @@ public abstract class GraphicsObject{
     public boolean hitTest(double x, double y) {
         return ((x >= getLeftBorder()) && (x <= getRightBorder())
                 && (y >= getTopBorder()) && (y <= getBottomBorder()));
-    }
-
-    public void destroy(){ //TODO: need another solution
-        app.removeObject(this);
     }
 
 }
