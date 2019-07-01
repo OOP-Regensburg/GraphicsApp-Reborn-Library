@@ -17,7 +17,7 @@ public class Sound {
      */
     public Sound(String filePath) {
         this.filePath = filePath;
-        Gdx.audio.newSound(Gdx.files.internal(filePath));
+        audioClip = Gdx.audio.newSound(Gdx.files.internal(filePath));
     }
 
     /**

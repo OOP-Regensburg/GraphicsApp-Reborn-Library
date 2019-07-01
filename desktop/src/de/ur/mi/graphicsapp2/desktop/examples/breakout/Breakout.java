@@ -69,7 +69,7 @@ public class Breakout extends GraphicsApp {
 		boolean brickWasRemoved = ball.handleCollisionWithBricks(bricks);
 		if (brickWasRemoved) {
 			gameDisplay.addScores(BRICK_SCORES);
-			//soundPlayer.playBrickRemovedSound();
+			soundPlayer.playBrickRemovedSound();
 		}
 		
 		if (ball.hitsBottomWall()) {
