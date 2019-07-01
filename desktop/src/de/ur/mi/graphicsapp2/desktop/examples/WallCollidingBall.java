@@ -63,11 +63,11 @@ public class WallCollidingBall extends GraphicsApp {
         double ballY = ball.getY();
         double ballRadius = ball.getWidth() / 2;
 
-        if ((ballX + ballRadius > WIDTH) || (ballX - ballRadius < 0)) {
+        if ((ballX + ballRadius > getWidth()) || (ballX - ballRadius < 0)) {
             ballSpeedX *= -1;
         }
 
-        if ((ballY + ballRadius > HEIGHT) || (ballY - ballRadius < 0)) {
+        if ((ballY + ballRadius > getHeight()) || (ballY - ballRadius < 0)) {
             ballSpeedY *= -1;
         }
     }

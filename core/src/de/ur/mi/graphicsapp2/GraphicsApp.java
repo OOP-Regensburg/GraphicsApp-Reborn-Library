@@ -32,6 +32,7 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
     private Color backgroundColor = Color.WHITE;
 
     private ArrayList<GraphicsObject> graphicsObjects = new ArrayList<GraphicsObject>();
+    private ArrayList<GraphicsObject> graphicsObjectsLastFrame = new ArrayList<GraphicsObject>();
 
     private InputHandler inputHandler;
 
@@ -55,6 +56,7 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
 
     @Override
     public void render() {
+        graphicsObjectsLastFrame = graphicsObjects; //keep in memory for later use if only setup() is used
         graphicsObjects = new ArrayList<GraphicsObject>();
         camera.update();
         if (!initilaized) {
@@ -62,6 +64,17 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
             initilaized = true;
         }
         super.render();
+
+        //first draw to add objects to list but objects get no really drawn
+        draw();
+
+        //TODO: find better way of implementation
+        /*
+        if no objects were added in draw (cause the app only uses setup() ) the objects from the last frame should be used
+         */
+        if(graphicsObjects.isEmpty()){
+            graphicsObjects = graphicsObjectsLastFrame;
+        }
 
         Gdx.gl.glClearColor(backgroundColor.r / 255f, backgroundColor.g / 255f, backgroundColor.b / 255f, backgroundColor.a / 255f);
         Gdx.gl.glClear(Gdx.gl30.GL_COLOR_BUFFER_BIT);
@@ -71,9 +84,9 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
             spriteBatch.setProjectionMatrix(camera.combined);
         }
 
-        draw();
-
         rendering = true;
+
+        //second draw cycle where added objects get now really drawn
 
         for (GraphicsObject graphicsObject : graphicsObjects) {
 
@@ -152,6 +165,11 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
 
     public void text(BitmapFont font, String text, int x, int y) {
         font.draw(spriteBatch, text, x, (int) (getHeight() - y));
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        size(width,height);
     }
 
     public void size(int width, int height) {
