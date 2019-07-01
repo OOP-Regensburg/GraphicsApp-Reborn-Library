@@ -19,7 +19,7 @@ public class WallCollidingBall extends GraphicsApp {
     private static final Color BALL_COLOR = Color.MAGENTA;
     private static final int BALL_ORIGIN_X = 100;
     private static final int BALL_ORIGIN_Y = 20;
-    private static final Color BG_COLOR = Color.PINK;
+    private static final Color BG_COLOR = Color.GREEN;
     private static final int WIDTH = 300;
     private static final int HEIGHT = 300;
 

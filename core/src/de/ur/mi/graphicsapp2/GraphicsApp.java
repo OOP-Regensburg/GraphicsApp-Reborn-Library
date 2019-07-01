@@ -38,6 +38,8 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
     private boolean spriteBatchOpen = false;
     private boolean shapeBatchOpen = false;
 
+    public boolean rendering = false;
+
 
     @Override
     public void create() {
@@ -71,6 +73,8 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
 
         draw();
 
+        rendering = true;
+
         for (GraphicsObject graphicsObject : graphicsObjects) {
 
             if ((graphicsObject instanceof Image || graphicsObject instanceof Label)) {
@@ -82,7 +86,7 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
                     spriteBatch.begin();
                     spriteBatchOpen = true;
                 }
-                graphicsObject.drawCall();
+                graphicsObject.draw();
             }
 
             if (!(graphicsObject instanceof Image || graphicsObject instanceof Label)) {
@@ -94,7 +98,7 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
                     shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
                     shapeBatchOpen = true;
                 }
-                graphicsObject.drawCall();
+                graphicsObject.draw();
             }
         }
 
@@ -106,6 +110,8 @@ public class GraphicsApp extends ApplicationAdapter implements InputListener {
             shapeBatchOpen = false;
             shapeRenderer.end();
         }
+
+        rendering = false;
 
 
     }
